@@ -56,10 +56,13 @@ public class AccountBalanceController extends Controller implements Initializabl
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        Stream.of(accountName, accountNumber, currentBalance).forEach(textField -> textField.setEditable(false));
-        accountName.setText(customer.getName());
-        accountNumber.setText(account.getAccountNumber());
-        currentBalance.setText(String.valueOf(account.getCurrentBalance()));
+        //Set all fields to be unmodifiable
+        Stream.of(accountName, accountNumber, currentBalance)
+                .forEach(textField -> textField.setEditable(false));
+
+        accountName.setText(customer.getName()); //Set customer name
+        accountNumber.setText(account.getAccountNumber()); //Set customer account number
+        currentBalance.setText(String.valueOf(account.getCurrentBalance())); //Set account current balance
 
     }
 }

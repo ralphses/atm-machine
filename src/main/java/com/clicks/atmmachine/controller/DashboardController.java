@@ -146,7 +146,7 @@ public class DashboardController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        nameField.setText(customer.getName());
-        nameField.setVisible(true);
+        nameField.setText(customer.getName()); //Set customer name
+        nameField.setVisible(true); //Make customer name visible
     }
 }

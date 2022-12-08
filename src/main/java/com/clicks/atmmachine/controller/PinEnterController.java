@@ -20,6 +20,9 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for the PIN enter page
+ */
 public class PinEnterController extends Controller
         implements Initializable {
 
@@ -73,20 +76,32 @@ public class PinEnterController extends Controller
         cardPIN.clear();
     }
 
+    /**
+     * Handler method to attempt authenticating
+     * this inserted ATM Card
+     *
+     * @param event passed from the button o the view
+     */
     @FXML
     void enter(ActionEvent event) {
 
-        String pinText = cardPIN.getText();
-        boolean validPin = Objects.equals(pinText, atmCard.getPin());
+        String pinText = cardPIN.getText(); //Get the PIN from input field
 
+        boolean validPin = Objects.equals(pinText, atmCard.getPin()); //Validate PIN
+
+        //Check last number of attempted logins
+        //this is necessary to avoid brute fox attack
         int noOfLastIncorrectAttempt = atmCard.getNoOfLastIncorrectAttempt();
 
+        //Checks if this PIN is not valid
         if(!validPin) {
+            //Display error message
             invalidPIN.setText("Incorrect PIN Trial remains " + (2 - noOfLastIncorrectAttempt));
             invalidPIN.setVisible(true);
             atmCard.setNoOfLastIncorrectAttempt(noOfLastIncorrectAttempt + 1);
         }
 
+        //If attempt exceeds 3 times, User is logged out
         if(noOfLastIncorrectAttempt > 1) {
 
             destroyEntities();
@@ -98,6 +113,7 @@ public class PinEnterController extends Controller
             StageSwitcher.toEnterPage(fxmlLoader, stage);
         }
 
+        //If PIN is valid
         if(validPin && noOfLastIncorrectAttempt <= 1) {
 
             //Todo: Go to dashboard
@@ -106,10 +122,17 @@ public class PinEnterController extends Controller
         }
     }
 
+
     private void setWelcomeMessage() {
         welcomeLabel.setText("Welcome " + customer.getName());
     }
 
+    /**
+     * Function to handle key inputs
+     * from on-screen keyboard in this application
+     *
+     * @param event
+     */
     @FXML
     void handleKey(ActionEvent event) {
         cardPIN.appendText(((Button)event.getSource()).getText());
@@ -117,24 +140,34 @@ public class PinEnterController extends Controller
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        cardPIN.setCursor(Cursor.DISAPPEAR);
+
+        //Set welcome message
+        setWelcomeMessage();
+
+        //Restrict user to enter only 4-digits
+        //Ensure that only numeric inputs are made
         cardPIN.textProperty().addListener((observableValue, s, t1) -> {
+
+            String cardPin = cardPIN.getText();
+
+            //Check if input is exceeding 4 digits
             if(t1.length() > 4) {
-                cardPIN.setText(cardPIN.getText().substring(0, 4));
+                cardPIN.setText(cardPin.substring(0, 4));
+            }
+
+            //Check for non-numeric inputs
+            if(!String.valueOf(t1.charAt(t1.length()-1)).matches("\\d")) {
+                cardPIN.setText(cardPin.substring(0, cardPin.length()-2));
             }
         });
 
         invalidPIN.setVisible(false);
     }
 
-
-
-    public void setUpParams(Customer customer, Account account, AtmCard atmCard) {
-        System.out.println("atmCard = " + PinEnterController.atmCard);
-
-        setWelcomeMessage();
-    }
-
+    /**
+     * Function to destroy all entities
+     * for this customer
+     */
     public void destroyEntities() {
         customer = null;
         account = null;

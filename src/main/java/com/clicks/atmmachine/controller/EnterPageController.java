@@ -140,7 +140,7 @@ public class EnterPageController  extends Controller  implements Initializable {
 
         //Make sure only numbers are entered in the input field
         cardNumber.textProperty().addListener((observableValue, s, t1) -> {
-            if(!String.valueOf(t1.charAt(t1.length()-1)).matches("\\d")) {
+            if((cardNumber.getText().length() > 1) && !String.valueOf(t1.charAt(t1.length()-1)).matches("\\d")) {
                 cardNumber.setText(cardNumber.getText().substring(0, cardNumber.getText().length()-1));
             }
         });

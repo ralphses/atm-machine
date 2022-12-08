@@ -20,6 +20,10 @@ import java.util.ResourceBundle;
 
 import static java.time.LocalTime.now;
 
+/**
+ * A controller class for the modal window to set
+ * period of transaction for the statement
+ */
 public class StatementPeriodController extends Controller implements Initializable {
 
     private AccountService accountService;
@@ -38,29 +42,50 @@ public class StatementPeriodController extends Controller implements Initializab
     @FXML
     private Button viewBtn;
 
+    /**
+     * Function to cancel
+     * a particular operation
+     *
+     * @param event
+     */
     @FXML
     void cancel(ActionEvent event) {
         ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
     }
 
+    /**
+     * Function to view the statement of account
+     *
+     * @param event
+     */
     @FXML
     void view(ActionEvent event) {
-        System.out.println("sta = " + startDate);
 
-        LocalDateTime startDateValue = LocalDateTime.of(startDate.getValue(), now());
-        LocalDateTime endDateValue = LocalDateTime.of(endDate.getValue(), now());
+        LocalDateTime startDateValue = LocalDateTime.of(startDate.getValue(), now()); //Get start date
+        LocalDateTime endDateValue = LocalDateTime.of(endDate.getValue(), now()); //GEt end date
 
-        List<Transaction> transactions = accountService.getAccountStatement(new StatementRequest(account, startDateValue, endDateValue));
+        //Fetch transactions for this user between period above
+        List<Transaction> transactions =
+                accountService.getAccountStatement(new StatementRequest(account, startDateValue, endDateValue));
 
+        //Initialize a controller for the View Statement page
         StatementController statementController = new StatementController();
+
+        //Initialize transactions
         statementController.setTransactions(transactions);
 
+        //Switch to the statement view page
         StageSwitcher.toWindow(event, statementController, "accountStatement.fxml", "Account Statement");
-
-
 
     }
 
+
+    /**
+     * Function to set up this class
+     *
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.accountService = new AccountService();

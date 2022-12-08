@@ -19,8 +19,21 @@ import java.io.IOException;
 import static javafx.scene.control.Alert.AlertType.CONFIRMATION;
 import static javafx.scene.control.ButtonType.OK;
 
+/**
+ * A key util class for moving from one
+ * window to another
+ */
 public class StageSwitcher {
 
+    /**
+     * Function to move from the Enter page to Card PIN page
+     *
+     * @param loader the view
+     * @param event
+     * @param customer the customer
+     * @param customerAccount the account
+     * @param customerAtmCard the ATM card
+     */
     public static void toCardPinPage(FXMLLoader loader, Event event, Customer customer, Account customerAccount, AtmCard customerAtmCard) {
 
         try {
@@ -28,7 +41,6 @@ public class StageSwitcher {
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
             PinEnterController pinEnterController = loader.getController();
-            pinEnterController.setUpParams(customer, customerAccount, customerAtmCard);
 
             setWindow(window, load, "Enter PIN");
 

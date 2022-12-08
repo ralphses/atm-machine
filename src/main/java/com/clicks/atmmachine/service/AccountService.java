@@ -113,13 +113,15 @@ public class AccountService {
         LocalDateTime start = statementRequest.start(); //Get the retrieval start date
         LocalDateTime end = statementRequest.end(); //Get the retrieval end date
 
+        String accountNumber = statementRequest.account().getAccountNumber();
+
         return (Optional.ofNullable(start).isEmpty() || Optional.ofNullable(end).isEmpty()) ? // Checks if start or end date is defined
                 ALL_TRANSACTIONS.stream()
-                        .filter(transaction -> transaction.getAccount().getAccountNumber().equalsIgnoreCase(statementRequest.account().getAccountNumber()))
+                        .filter(transaction -> transaction.getAccount().getAccountNumber().equalsIgnoreCase(accountNumber))
                         .collect(Collectors.toList()) :
                 ALL_TRANSACTIONS.stream()
                         .filter(transaction ->
-                                transaction.getAccount().getAccountNumber().equalsIgnoreCase(statementRequest.account().getAccountNumber()) &&
+                                transaction.getAccount().getAccountNumber().equalsIgnoreCase(accountNumber) &&
                                         transaction.getCreatedAt().isAfter(ChronoLocalDateTime.from(start.minus(1, ChronoUnit.DAYS))) &&
                                         transaction.getCreatedAt().isBefore(ChronoLocalDateTime.from(end.plus(1, ChronoUnit.DAYS))))
                         .collect(Collectors.toList());

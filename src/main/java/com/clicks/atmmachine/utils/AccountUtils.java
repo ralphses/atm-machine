@@ -8,11 +8,20 @@ import java.util.InputMismatchException;
 
 import static com.clicks.atmmachine.service.AccountService.*;
 
+/**
+ * Util class for Customer account
+ */
 public class AccountUtils {
 
     public static final double TRANSFER_FEE = 20.5;
     public static final double WITHDRAWAL_FEE = 5.5;
 
+    /**
+     * Find {@link Customer} with provided account number
+     *
+     * @param accountNumber provided account number
+     * @return an instance of {@link Customer}
+     */
     public Customer findCustomerByNumber(String accountNumber) {
         return ALL_CUSTOMERS.stream()
                 .filter(customer -> customer.getAccounts()
@@ -22,6 +31,12 @@ public class AccountUtils {
                 .orElseThrow(() -> new InputMismatchException("Invalid card number "));
     }
 
+    /**
+     * Find {@link Customer} with provided ATM card number
+     *
+     * @param cardNumber provided ATM card number
+     * @return an instance of {@link Customer}
+     */
     public Customer findCustomer(String cardNumber) {
 
        return ALL_CUSTOMERS.stream()
@@ -34,6 +49,13 @@ public class AccountUtils {
                .orElseThrow(() -> new InputMismatchException("Invalid card number "));
     }
 
+    /**
+     * Function to find an ATM Card for this account
+     *
+     * @param cardNumber the ATM card number
+     * @param account the Account
+     * @return an instance of {@link AtmCard}
+     */
     public AtmCard findCurrentAtmCard(String cardNumber, Account account) {
 
         return account.getAtmCards()
@@ -44,6 +66,13 @@ public class AccountUtils {
                 .orElseThrow(() -> new InputMismatchException("Invalid card number"));
     }
 
+    /**
+     * Function to find a particular {@link Account}
+     *
+     * @param cardNumber provided card number
+     * @param customer the provided customer
+     * @return an instance of {@link Account}
+     */
     public Account findCurrentAccount(String cardNumber, Customer customer) {
 
         return customer.getAccounts()
