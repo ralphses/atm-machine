@@ -4,6 +4,10 @@ import com.clicks.atmmachine.enums.CardType;
 
 import java.time.LocalDate;
 
+/**
+ * A model representing an ATM card
+ * belonging to an account number
+ */
 public class AtmCard {
 
     private String cardNumber;
@@ -74,6 +78,14 @@ public class AtmCard {
         isLocked = locked;
     }
 
+    public int getNoOfLastIncorrectAttempt() {
+        return noOfLastIncorrectAttempt;
+    }
+
+    public void setNoOfLastIncorrectAttempt(int noOfLastIncorrectAttempt) {
+        this.noOfLastIncorrectAttempt = noOfLastIncorrectAttempt;
+    }
+
     @Override
     public String toString() {
         return "AtmCard{" +
@@ -86,11 +98,4 @@ public class AtmCard {
                 '}';
     }
 
-    public int getNoOfLastIncorrectAttempt() {
-        return noOfLastIncorrectAttempt;
-    }
-
-    public void setNoOfLastIncorrectAttempt(int noOfLastIncorrectAttempt) {
-        this.noOfLastIncorrectAttempt = noOfLastIncorrectAttempt;
-    }
 }

@@ -13,8 +13,8 @@ import static com.clicks.atmmachine.service.AccountService.*;
  */
 public class AccountUtils {
 
-    public static final double TRANSFER_FEE = 20.5;
-    public static final double WITHDRAWAL_FEE = 5.5;
+    public static final double TRANSFER_FEE = 20.5; //Transfer fee for all users
+    public static final double WITHDRAWAL_FEE = 5.5; //Withdrawal fee for all users
 
     /**
      * Find {@link Customer} with provided account number
@@ -28,6 +28,7 @@ public class AccountUtils {
                         .stream()
                         .anyMatch(account -> account.getAccountNumber().equalsIgnoreCase(accountNumber)))
                 .findFirst()
+                //if no such customer is found, an exception is thrown
                 .orElseThrow(() -> new InputMismatchException("Invalid card number "));
     }
 
@@ -46,6 +47,7 @@ public class AccountUtils {
                                .stream()
                                .anyMatch(atmCard -> atmCard.getCardNumber().equalsIgnoreCase(cardNumber))))
                .findFirst()
+               //if no such customer is found, an exception is thrown
                .orElseThrow(() -> new InputMismatchException("Invalid card number "));
     }
 
@@ -55,6 +57,8 @@ public class AccountUtils {
      * @param cardNumber the ATM card number
      * @param account the Account
      * @return an instance of {@link AtmCard}
+     *
+     * @throws InputMismatchException when card number is invalid
      */
     public AtmCard findCurrentAtmCard(String cardNumber, Account account) {
 
@@ -63,6 +67,7 @@ public class AccountUtils {
                 .flatMap(atmCard -> account.getAtmCards().stream())
                 .filter(atmCard -> atmCard.getCardNumber().equalsIgnoreCase(cardNumber))
                 .findFirst()
+                //if no such ATM Card is found, an exception is thrown
                 .orElseThrow(() -> new InputMismatchException("Invalid card number"));
     }
 

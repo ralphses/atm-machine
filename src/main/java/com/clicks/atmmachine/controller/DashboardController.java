@@ -108,12 +108,13 @@ public class DashboardController extends Controller implements Initializable {
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(Main.class.getResource("statementPeriod.fxml"));
 
-        loader.setController(new StatementPeriodController());
+        loader.setController(new StatementPeriodController()); //set controller for this view
 
+        //Attempt lunching the view
         try {
 
             stage.setScene(new Scene(loader.load()));
-            stage.initModality(WINDOW_MODAL);
+            stage.initModality(WINDOW_MODAL); // make sure only this window is active
             stage.initOwner(((Node)event.getSource()).getScene().getWindow());
             stage.show();
 
@@ -129,6 +130,7 @@ public class DashboardController extends Controller implements Initializable {
     @FXML
     void withdraw(ActionEvent event) {
 
+        //Switches to window to withdraw money
         StageSwitcher.toWindow(event, new WithdrawalController(), "withdrawal.fxml", "Withdrawal");
 
     }

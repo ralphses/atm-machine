@@ -49,10 +49,17 @@ public class StageSwitcher {
         }
     }
 
+    /**
+     * Function to enter the Entry Page of this application
+     *
+     * @param loader the loader containing the view
+     * @param stage the window
+     */
     public static void toEnterPage(FXMLLoader loader, Stage stage) {
         try {
             setWindow(stage, loader.load(), "Insert Card");
 
+            //Prompt the user whether they really want to exit the application or not
             stage.setOnCloseRequest(windowEvent -> new Alert(CONFIRMATION, "Exit Application?")
                     .showAndWait()
                     .ifPresent(present -> {
@@ -67,19 +74,36 @@ public class StageSwitcher {
 
     }
 
+    /**
+     * Function to switch to any other window
+     *
+     * @param event an action from the view
+     * @param controller the view controller
+     * @param view the name of the view file (usually a .fxml file)
+     * @param stageTitle the title of the new window
+     */
     public static void toWindow(ActionEvent event, Controller controller, String view, String stageTitle) {
 
         try {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource(view));
-            Stage stage = (Stage) ( (Node) event.getSource()).getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource(view)); //load the view
+            Stage stage = (Stage) ( (Node) event.getSource()).getScene().getWindow(); //Get teh window from the event
 
-            loader.setController(controller);
+            loader.setController(controller); //set controller
+
+            //Complete window setup
             setWindow(stage, loader.load(), stageTitle);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
+    /**
+     * Function to complete window set up
+     *
+     * @param stage the window
+     * @param root the main node
+     * @param stageTitle the title of the new window
+     */
     private static void setWindow(Stage stage, Parent root, String stageTitle) {
         Scene scene = new Scene(root, 900, 600);
         stage.setScene(scene);

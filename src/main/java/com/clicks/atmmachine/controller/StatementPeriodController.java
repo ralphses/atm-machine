@@ -90,7 +90,7 @@ public class StatementPeriodController extends Controller implements Initializab
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.accountService = new AccountService();
 
-        endDate.setValue(LocalDate.now());
-        startDate.setValue(LocalDate.now());
+        startDate.setValue(LocalDate.now()); //Default value of start date should be now
+        endDate.setValue(LocalDate.now()); //Default value of end date should be now
     }
 }

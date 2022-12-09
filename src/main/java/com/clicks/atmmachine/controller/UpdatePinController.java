@@ -115,8 +115,10 @@ public class UpdatePinController extends Controller implements Initializable {
         Stream.of(newPin, confirmPin)
                 .forEach(field -> field.textProperty().addListener((observableValue, s, t1) -> {
 
+                    //Get the input
                     String fieldText = field.getText();
 
+                    //restricts input length to 4
                     if(t1.length() > 4) {
                         field.setText(fieldText.substring(0,4));
                     }

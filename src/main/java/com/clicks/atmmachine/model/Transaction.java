@@ -4,6 +4,10 @@ import com.clicks.atmmachine.enums.TransactionType;
 
 import java.time.LocalDateTime;
 
+/**
+ * A model representing a Transaction
+ * belonging to an account number
+ */
 public class Transaction {
 
     private String id;

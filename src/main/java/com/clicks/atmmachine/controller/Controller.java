@@ -23,8 +23,8 @@ public class Controller {
      * Function to clear error message
      */
     protected void clearErrorMessage() {
-        errorMessage.setText("");
-        errorMessage.setVisible(false);
+        errorMessage.setText(""); //set the error message to empty string
+        errorMessage.setVisible(false); //make error message invisible
     }
 
     /**

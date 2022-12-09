@@ -2,6 +2,10 @@ package com.clicks.atmmachine.model;
 
 import java.util.Set;
 
+/**
+ * A model representing a Customer
+ * belonging to this bank
+ */
 public class Customer {
 
     private String name;

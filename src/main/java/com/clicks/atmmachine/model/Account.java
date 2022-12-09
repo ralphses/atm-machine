@@ -4,6 +4,12 @@ import com.clicks.atmmachine.enums.AccountType;
 
 import java.util.Set;
 
+/**
+ * Model representing an account
+ * belonging to a particular customer
+ *
+ * It also has ATM cards
+ */
 public class Account {
 
     private String accountNumber;

@@ -49,6 +49,9 @@ public class Main extends Application {
         ALL_CUSTOMERS = Set.of(customerRepository.getFirstCustomer(), customerRepository.getSecondCustomer());
         ALL_TRANSACTIONS = new ArrayList<>();
 
+        /**
+         * Call the init() of the {@link Application} class
+         */
         super.init();
     }
 }
